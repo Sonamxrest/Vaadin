@@ -3,14 +3,20 @@ package com.example.application.data.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class Account implements Serializable {
     Long id;
     @JsonProperty("account_name")
+    @NotNull
     private String accountName;
     @JsonProperty("account_number")
+    @NotNull
+
     private String accountNumber;
+
+    @NotNull
     private double balance;
 
     public boolean isNew() {
@@ -33,6 +39,8 @@ public class Account implements Serializable {
 
     @JsonProperty("new")
     private boolean New;
+
+    @NotNull
     private Bank bank;
     public Long getId() {
         return id;

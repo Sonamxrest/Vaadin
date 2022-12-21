@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,10 +29,15 @@ public class Customer implements Serializable {
     }
 
     @JsonProperty("first_name")
+    @NotNull
+
     private String firstName;
 
     @JsonProperty("last_name")
+    @NotNull
+
     private String lastName;
+    @NotNull
 
     private Double balance;
 
@@ -44,9 +50,14 @@ public class Customer implements Serializable {
     public boolean isEnabled() {
         return enabled;
     }
+    @NotNull
 
     private String username;
+    @NotNull
+
     private String password;
+    @NotNull
+
     private RoleType role;
     private List<Account> accounts = new ArrayList<>();
 
@@ -66,8 +77,12 @@ public class Customer implements Serializable {
         this.enabled = enabled;
     }
 
+    @NotNull
+
+
     private Certificates certificates = new Certificates();
 
+    @NotNull
 
     private Double totalBalance;
 

@@ -17,13 +17,16 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.binder.RequiredFieldConfigurator;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import org.hibernate.validator.internal.constraintvalidators.bv.NullValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.security.RolesAllowed;
@@ -43,7 +46,7 @@ public class AddAccount extends Div implements HasUrlParameter<Long> {
 
     @Autowired
     private BankService bankService;
-    Binder<Account> accountBinder = new Binder<>(Account.class);
+    BeanValidationBinder<Account> accountBinder = new BeanValidationBinder<>(Account.class);
 
     private List<Account> accounts = new ArrayList<>();
     TextField accountName = new TextField("Account Name");
@@ -97,6 +100,12 @@ public class AddAccount extends Div implements HasUrlParameter<Long> {
         });
         accountBinder.setBean(new Account());
         accountBinder.bindInstanceFields(this);
+        accountBinder.setRequiredConfigurator(RequiredFieldConfigurator.NOT_EMPTY.chain(RequiredFieldConfigurator.NOT_NULL));
+//        accountBinder.addStatusChangeListener(d->{
+//            save.setEnabled( accountBinder.validate().isOk());
+//        });
+//        save.setEnabled( accountBinder.validate().isOk());
+
     }
     public String getTotal() {
         DecimalFormat formatter = new DecimalFormat("#,###.00");
